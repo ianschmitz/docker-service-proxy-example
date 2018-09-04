@@ -1,0 +1,23 @@
+version: "3"
+services:
+  proxy:
+    container_name: proxy
+    image: nginx:mainline-alpine
+    depends_on:
+      - app-a
+      - app-b
+    ports:
+      - 8080:80
+    volumes:
+      - ./proxy/web:/usr/share/nginx/html:ro
+      - ./proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+  app-a:
+    container_name: app-a
+    image: nginx:mainline-alpine
+    volumes:
+      - ./app-a:/usr/share/nginx/html:ro
+  app-b:
+    container_name: app-b
+    image: nginx:mainline-alpine
+    volumes:
+      - ./app-b:/usr/share/nginx/html:ro
